@@ -1,23 +1,18 @@
 package cn.andios.dao;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import java.sql.*;
 
 public class UserDao {
+    public static Connection getConn() throws SQLException {
 
-    private static String driver = "com.mysql.jdbc.Driver";
-    private static String username = "root";
-    private static String password = "root";
-    private static String url = "jdbc:mysql://localhost:3306/demo";
-
-    public static Connection getConn(){
         Connection conn = null;
-        try {
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url,username,password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        ComboPooledDataSource cpds = new ComboPooledDataSource();
+        conn = cpds.getConnection();
         return conn;
+
     }
 
     public static void release(Connection conn, Statement st, ResultSet rs){
